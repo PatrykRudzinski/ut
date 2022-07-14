@@ -62,6 +62,7 @@ const config: GatsbyConfig = {
         images: path.join(__dirname, "src/images"),
         sections: path.join(__dirname, "src/sections"),
         content: path.join(__dirname, "src/content"),
+        styles: path.join(__dirname, "src/styles"),
       },
     },
   ],
