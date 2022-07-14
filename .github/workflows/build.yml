@@ -1,0 +1,38 @@
+name: build
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the main branch
+on:
+  push:
+    branches:
+      - master
+  repository_dispatch:
+
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-18.04
+    env:
+      ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v1.4.2
+        with:
+          node-version: '12'
+      - name: Install-dependencies
+        run: "npm install"
+      - name: Build-gatsby
+        run: "npm build"
+
+      - name: copy file via ssh key
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          port: ${{ secrets.PORT }}
+          key: ${{ secrets.KEY }}
+          source: "public/"
+          strip_components: 1
+          target: "domains/domena.pl/public_html/"
