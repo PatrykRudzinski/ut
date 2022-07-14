@@ -35,4 +35,4 @@ jobs:
           key: ${{ secrets.KEY }}
           source: "public/"
           strip_components: 1
-          target: "domains/domena.pl/public_html/"
+          target: "domains/urszulaturewicz.pl/public_html/"
