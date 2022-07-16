@@ -1,54 +1,52 @@
-import * as React from "react"
-import { Link } from "gatsby"
+import * as React from "react";
+import { Link } from "gatsby";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import logo from "images/notfound.gif";
+import Typography from "../components/Typography/Typography";
+import theme from "../styles/theme";
+import GlobalStyle from "../styles/GlobalStyle";
+import { ThemeProvider } from "styled-components";
 
-// styles
 const pageStyles = {
   color: "#232129",
-  padding: "96px",
+  padding: "24px",
   fontFamily: "-apple-system, Roboto, sans-serif, serif",
-}
-const headingStyles = {
-  marginTop: 0,
-  marginBottom: 64,
-  maxWidth: 320,
-}
+};
 
-const paragraphStyles = {
-  marginBottom: 48,
-}
-const codeStyles = {
-  color: "#8A6534",
-  padding: 4,
-  backgroundColor: "#FFF4DB",
-  fontSize: "1.25rem",
-  borderRadius: 4,
-}
+const linkStyles = {
+  marginBottom: "1rem",
+  width: "100%",
+  display: "inline-block",
+  textDecoration: "none",
+  cursor: "pointer",
+};
 
-// markup
+const imageStyles = {
+  maxWidth: "1640px",
+  margin: "0 auto",
+  width: "100%",
+};
+
 const NotFoundPage = () => {
   return (
-    <main style={pageStyles}>
-      <title>Not found</title>
-      <h1 style={headingStyles}>Page not found</h1>
-      <p style={paragraphStyles}>
-        Sorry{" "}
-        <span role="img" aria-label="Pensive emoji">
-          😔
-        </span>{" "}
-        we couldn’t find what you were looking for.
-        <br />
-        {process.env.NODE_ENV === "development" ? (
-          <>
-            <br />
-            Try creating a page in <code style={codeStyles}>src/pages/</code>.
-            <br />
-          </>
-        ) : null}
-        <br />
-        <Link to="/">Go home</Link>.
-      </p>
-    </main>
-  )
-}
+    <ThemeProvider theme={theme}>
+      <GlobalStyle />
+      <main style={pageStyles}>
+        <Link to="/" style={linkStyles}>
+          <Typography
+            variant="title"
+            fontSize="title"
+            uppercase
+            color="textInverted"
+          >
+            &lt; Powrót
+          </Typography>
+        </Link>
+        <img style={imageStyles} src={logo} alt="notfound" />
+      </main>
+    </ThemeProvider>
+  );
+};
 
-export default NotFoundPage
+export default NotFoundPage;
