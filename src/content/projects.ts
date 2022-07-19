@@ -1,3 +1,5 @@
-const projects = {};
+const projects = {
+  title: "projekty",
+};
 
 export default projects;

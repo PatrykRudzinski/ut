@@ -7,14 +7,8 @@ interface Props {
 
 const StyledContentWrapper = styled.div<Props>(({ theme }) => ({
   display: "grid",
-  gridTemplateColumns: "2fr 3fr",
-  gridGap: theme.spacing(4, 6),
-
-  "& .about_title": {
-    lineHeight: ".875em",
-    gridColumn: "1/3",
-    whiteSpace: "pre",
-  },
+  gridTemplateColumns: "1fr 1fr",
+  gridGap: theme.spacing(8),
 }));
 
 export default StyledContentWrapper;

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { colorsKeys, fontSizeResponsiveKeys, Theme } from "styles/theme";
 
-interface Props {
+export interface Props {
   fontSize?: fontSizeResponsiveKeys;
   margin?: number;
   uppercase?: boolean;
@@ -26,7 +26,6 @@ const resolveVariant = ({ theme, variant, fontWeight }: Props) => {
         fontFamily: theme.typography.fontTitle,
         letterSpacing: "4px",
         fontWeight: fontWeight || theme.typography.fontTitleWeight,
-        lineHeight: ".875em",
       };
     default:
       return {
@@ -40,6 +39,7 @@ const StyledTypography = styled.p<Props>(({ theme, ...props }) => ({
   ...resolveVariant({ theme, ...props }),
   margin: props.margin || "0px",
   textTransform: props.uppercase ? "uppercase" : "none",
+  textDecoration: "none",
   color: props.color ? theme.colors[props.color] : theme.colors.text,
   textAlign: props.align || "left",
   maxWidth: props.limitedWidth ? "55ch" : "unset",

@@ -23,14 +23,14 @@ export type fontSizeResponsiveValues =
 const colors = {
   // by role
   text: "#333333",
-  textInverted: "#eeeeee",
+  textInverted: "#FBFBFB",
   background100: "#FFFFFF",
   background200: "#EFEFEF",
   background300: "#F2F0ED",
-  background900: "#000000",
+  background900: "#0F0F0F",
   // by color
-  black: "#000000",
-  white: "#FFFFFF",
+  black: "#0F0F0F",
+  white: "#FBFBFB",
   purple: "#3F54AC",
   salmon: "#F49580",
   yellow: "#F7BA05",

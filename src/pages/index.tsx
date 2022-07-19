@@ -1,14 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-import ReactFullpage from "@fullpage/react-fullpage";
 import Hero from "sections/Hero/Hero";
 import About from "sections/About/About";
-import Curriculum from "sections/Curriculum/Curriculum";
-import Projects from "sections/Projects/Projects";
-import Footer from "sections/Footer/Footer";
 import { ThemeProvider } from "styled-components";
 import theme from "styles/theme";
 import GlobalStyle from "styles/GlobalStyle";
+import MobileVersionInfo from "../components/MobileVersionInfo/MobileVersionInfo";
 
 const IndexPageContent = React.lazy(
   () => import("components/IndexPageContent/IndexPageContent")
@@ -21,13 +18,27 @@ const Fallback = () => (
   </>
 );
 
+const MIN_WIDTH = 720;
+
 const IndexPage = () => {
   const isSSR = typeof window === "undefined";
+  const [width, setWidth] = useState<number | null>(null);
+
+  const onResize = () => setWidth(window.innerWidth);
+
+  useEffect(() => {
+    if (isSSR) return;
+    setWidth(window.innerWidth);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
-      {isSSR ? (
+      {!!width && width < MIN_WIDTH ? (
+        <MobileVersionInfo minWidth={MIN_WIDTH} />
+      ) : isSSR ? (
         <Fallback />
       ) : (
         <React.Suspense fallback={<Fallback />}>
