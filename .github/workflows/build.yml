@@ -38,4 +38,4 @@ jobs:
 #          source: "public/"
           source: "test/"
 #          strip_components: 1
-          target: "domains/urszulaturewicz.pl/public_html/"
+          target: "domains/urszulaturewicz.pl/public_nodejs/public"
