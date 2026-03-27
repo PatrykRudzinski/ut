@@ -1,0 +1,29 @@
+@import 'tailwindcss';
+
+@layer base {
+  :root {
+    color-scheme: light dark;
+  }
+
+  html {
+    scrollbar-gutter: stable;
+  }
+
+  body {
+    @apply m-0 min-h-dvh antialiased;
+  }
+}
+
+@layer components {
+  /* Left-pointing chevron: two borders rotated 135° */
+  .nav-chevron-left {
+    box-sizing: border-box;
+    display: inline-block;
+    flex-shrink: 0;
+    width: 0.45em;
+    height: 0.45em;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    transform: rotate(135deg);
+  }
+}
