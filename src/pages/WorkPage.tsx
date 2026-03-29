@@ -2,6 +2,14 @@ import { useParams } from 'react-router-dom'
 import { ScrollReveal } from '../components/ScrollReveal'
 import { getWorkDetail } from '../data/mockWorkDetails'
 
+import img1 from '../assets/data/source/mailing/images/1.png'
+import img2 from '../assets/data/source/mailing/images/2.jpg'
+import img3 from '../assets/data/source/mailing/images/3.png'
+import img4 from '../assets/data/source/mailing/images/4.jpg'
+
+
+const gallery = [img1, img2, img3, img4]
+
 export function WorkPage() {
   const { workSlug } = useParams<{ workSlug: string }>()
   const detail = getWorkDetail(workSlug)
@@ -10,7 +18,6 @@ export function WorkPage() {
   const description =
     detail?.description ??
     'This entry is not part of the mock catalog yet; add a matching record in the project data when you are ready. Until then you can still use the layout below as a template—swap in a longer centered intro, then wire the gallery to your own assets or CMS.'
-  const gallery = detail?.gallery ?? []
 
   return (
     <article className="space-y-8">
@@ -27,7 +34,7 @@ export function WorkPage() {
         <div className="flex flex-col gap-6">
           {gallery.map((src, index) => (
             <ScrollReveal key={`${workSlug ?? 'work'}-${index}`}>
-              <figure className="m-0 aspect-[4/3] w-full overflow-hidden bg-zinc-100 dark:bg-zinc-900">
+              <figure className="m-0 aspect-4/3 w-full overflow-hidden">
                 <img
                   src={src}
                   alt={`${title} — image ${index + 1}`}
