@@ -1,0 +1,72 @@
+---
+import { ScrollReveal } from "../../components/ScrollReveal";
+import Layout from "../../layouts/Layout.astro";
+import { MOCK_HOME_WORKS } from "../../data/mockHomeWorks";
+import { MOCK_WORK_DETAILS, getWorkDetail } from "../../data/mockWorkDetails";
+
+import img1 from "../../assets/data/source/mailing/images/1.png";
+import img2 from "../../assets/data/source/mailing/images/2.jpg";
+import img3 from "../../assets/data/source/mailing/images/3.png";
+import img4 from "../../assets/data/source/mailing/images/4.jpg";
+
+const mailingGallery = [img1.src, img2.src, img3.src, img4.src];
+
+export function getStaticPaths() {
+  const slugs = new Set<string>([
+    "mailing",
+    ...MOCK_HOME_WORKS.map((w) => w.workSlug),
+    ...Object.keys(MOCK_WORK_DETAILS),
+  ]);
+  return [...slugs].map((workSlug) => ({ params: { workSlug } }));
+}
+
+const { workSlug } = Astro.params;
+const detail = getWorkDetail(workSlug);
+
+const title = detail?.title ?? workSlug?.replace(/-/g, " ") ?? "Work";
+const description =
+  detail?.description ??
+  "This entry is not part of the mock catalog yet; add a matching record in the project data when you are ready. Until then you can still use the layout below as a template—swap in a longer centered intro, then wire the gallery to your own assets or CMS.";
+
+/** Same as the previous Vite page template: local mailing assets for every work route. */
+const gallery = mailingGallery;
+---
+
+<Layout title={`${title} — urszulaturewicz`}>
+  <article class="space-y-8">
+    <header class="space-y-4">
+      <h1 class="text-center text-3xl font-semibold tracking-tight">
+        {title}
+      </h1>
+      <p
+        class="mx-auto max-w-3xl text-center text-base leading-relaxed text-zinc-600 sm:text-lg dark:text-zinc-400"
+      >
+        {description}
+      </p>
+    </header>
+
+    {
+      gallery.length > 0 ? (
+        <div class="flex flex-col gap-6">
+          {gallery.map((src, index) => (
+            <ScrollReveal client:visible key={`${workSlug ?? "work"}-${index}`}>
+              <figure class="m-0 aspect-4/3 w-full overflow-hidden">
+                <img
+                  src={src}
+                  alt={`${title} — image ${index + 1}`}
+                  class="h-full w-full object-cover"
+                  loading={index === 0 ? "eager" : "lazy"}
+                  decoding="async"
+                />
+              </figure>
+            </ScrollReveal>
+          ))}
+        </div>
+      ) : (
+        <p class="text-sm text-zinc-500 dark:text-zinc-500">
+          No images in the gallery for this entry.
+        </p>
+      )
+    }
+  </article>
+</Layout>
