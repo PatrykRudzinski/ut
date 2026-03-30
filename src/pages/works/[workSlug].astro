@@ -18,6 +18,7 @@ export async function getStaticPaths() {
 const { workSlug } = Astro.params;
 const works = await getCollection("works");
 const entry = works.find((w) => w.id === workSlug);
+const normalizedWorkSlug = (workSlug ?? "").toLowerCase();
 
 const title = entry?.data.title ?? workSlug?.replace(/-/g, " ") ?? "Work";
 const description =
@@ -30,7 +31,7 @@ const gallery = Object.entries(imageImports)
     const match = path.match(/\/works\/([^/]+)\/([^/]+)\.[^.]+$/);
     if (!match) return null;
     const [, id, basename] = match;
-    if (id !== workSlug) return null;
+    if (id.toLowerCase() !== normalizedWorkSlug) return null;
     if (basename.toLowerCase().startsWith("cover")) return null;
     return mod.default;
   })
@@ -44,7 +45,7 @@ const gallery = Object.entries(imageImports)
         {title}
       </h1>
       <p
-        class="mx-auto max-w-3xl text-center text-base leading-relaxed text-zinc-600 sm:text-lg dark:text-zinc-400"
+        class="mx-auto max-w-3xl text-center text-base leading-relaxed text-zinc-600 sm:text-lg"
       >
         {description}
       </p>
@@ -59,7 +60,7 @@ const gallery = Object.entries(imageImports)
                 <Image
                   src={src}
                   alt={`${title} — image ${index + 1}`}
-                  width={1200}
+                  width={2400}
                   class="h-full w-full object-contain"
                   loading={index === 0 ? "eager" : "lazy"}
                 />
@@ -68,7 +69,7 @@ const gallery = Object.entries(imageImports)
           ))}
         </div>
       ) : (
-        <p class="text-sm text-zinc-500 dark:text-zinc-500">
+        <p class="text-sm text-zinc-500">
           No images in the gallery for this entry.
         </p>
       )

@@ -17,7 +17,7 @@ const coverById = Object.fromEntries(
   Object.entries(coverImports)
     .map(([path, mod]) => {
       const match = path.match(/\/works\/([^/]+)\//);
-      const id = match?.[1];
+      const id = match?.[1]?.toLowerCase();
       return id ? [id, mod.default] : null;
     })
     .filter(Boolean) as [string, ImageMetadata][],
@@ -25,13 +25,13 @@ const coverById = Object.fromEntries(
 ---
 
 <Layout>
-  <div class="w-full space-y-8 px-[2px]">
+  <div class="home-intro w-full space-y-8 px-[2px]">
     <ul
       class="grid w-full list-none grid-cols-2 gap-[2px] p-0 min-[780px]:grid-cols-3"
     >
       {
         works.map((entry, index) => {
-          const coverSource = coverById[entry.id];
+          const coverSource = coverById[entry.id.toLowerCase()];
           return (
             <li>
               <HomePageCard
@@ -51,3 +51,26 @@ const coverById = Object.fromEntries(
     </ul>
   </div>
 </Layout>
+
+<style>
+  .home-intro {
+    animation: home-intro-fade 500ms ease-out both;
+  }
+
+  @keyframes home-intro-fade {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .home-intro {
+      animation: none;
+    }
+  }
+</style>

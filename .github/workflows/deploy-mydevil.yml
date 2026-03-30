@@ -1,0 +1,57 @@
+name: Deploy to MyDevil
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+
+concurrency:
+  group: deploy-mydevil-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Start SSH agent
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.MYDEVIL_SSH_PRIVATE_KEY }}
+
+      - name: Add SSH host key
+        run: |
+          mkdir -p ~/.ssh
+          PORT="${{ secrets.MYDEVIL_PORT }}"
+          if [ -z "$PORT" ]; then PORT="22"; fi
+          if [ -n "${{ secrets.MYDEVIL_KNOWN_HOSTS }}" ]; then
+            echo "${{ secrets.MYDEVIL_KNOWN_HOSTS }}" >> ~/.ssh/known_hosts
+          else
+            ssh-keyscan -p "$PORT" "${{ secrets.MYDEVIL_HOST }}" >> ~/.ssh/known_hosts
+          fi
+
+      - name: Deploy dist via rsync
+        env:
+          MYDEVIL_HOST: ${{ secrets.MYDEVIL_HOST }}
+          MYDEVIL_USER: ${{ secrets.MYDEVIL_USER }}
+          MYDEVIL_PORT: ${{ secrets.MYDEVIL_PORT }}
+          MYDEVIL_TARGET_DIR: ${{ secrets.MYDEVIL_TARGET_DIR }}
+          RSYNC_DELETE_FLAG: --delete
+          DEPLOY_SOURCE_DIR: dist/
+        run: bash ./scripts/deploy-mydevil.sh

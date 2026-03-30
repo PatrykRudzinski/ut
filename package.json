@@ -7,7 +7,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "lint": "eslint .",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "deploy:mydevil": "bash ./scripts/deploy-mydevil.sh"
   },
   "dependencies": {
     "@astrojs/react": "^5.0.2",

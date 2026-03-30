@@ -7,7 +7,7 @@ type Props = {
 
 const { title = "urszulaturewicz" } = Astro.props;
 const pathname = Astro.url.pathname;
-const isWorkSubpage = /^\/works\/[^/]+$/.test(pathname);
+const isWorkSubpage = pathname.split("/").includes("works");
 ---
 
 <!doctype html>
@@ -18,33 +18,33 @@ const isWorkSubpage = /^\/works\/[^/]+$/.test(pathname);
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
   </head>
-  <body>
-    <div
-      class="flex min-h-dvh flex-col bg-zinc-50 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100"
-    >
+  <body class="bg-zinc-50 text-zinc-900">
+    <div class="flex min-h-dvh flex-col">
       <header class="shrink-0">
         <div class="mx-auto max-w-[1200px] px-6 pb-4 pt-8 text-center">
           <a
             href="/"
-            class="text-base font-medium uppercase tracking-[0.35em] text-zinc-900 dark:text-zinc-50 sm:text-lg"
+            class="text-base font-medium uppercase tracking-[0.35em] text-zinc-900 sm:text-lg"
           >
             urszula turewicz
           </a>
         </div>
       </header>
       <nav
-        class="sticky top-0 z-10 w-full shrink-0 bg-white/80 py-4 backdrop-blur dark:bg-zinc-950"
+        class="sticky top-0 z-10 w-full shrink-0 bg-zinc-50/80 py-4 backdrop-blur"
         aria-label="Main"
       >
         <div class="mx-auto flex max-w-[1200px] flex-col items-center px-6">
-          <div class="flex flex-wrap items-center justify-center gap-x-8 gap-y-2">
+          <div
+            class="flex flex-wrap items-center justify-center gap-x-8 gap-y-2"
+          >
             <a
               href="/"
               class:list={[
                 "text-sm transition-colors",
                 pathname === "/"
-                  ? "text-zinc-900 dark:text-zinc-50"
-                  : "text-zinc-500 hover:text-zinc-900 dark:text-zinc-500 dark:hover:text-zinc-200",
+                  ? "text-zinc-900"
+                  : "text-zinc-500 hover:text-zinc-900",
               ]}
             >
               Works
@@ -54,8 +54,8 @@ const isWorkSubpage = /^\/works\/[^/]+$/.test(pathname);
               class:list={[
                 "text-sm transition-colors",
                 pathname === "/about"
-                  ? "text-zinc-900 dark:text-zinc-50"
-                  : "text-zinc-500 hover:text-zinc-900 dark:text-zinc-500 dark:hover:text-zinc-200",
+                  ? "text-zinc-900"
+                  : "text-zinc-500 hover:text-zinc-900",
               ]}
             >
               About
@@ -65,8 +65,8 @@ const isWorkSubpage = /^\/works\/[^/]+$/.test(pathname);
               class:list={[
                 "text-sm transition-colors",
                 pathname === "/contact"
-                  ? "text-zinc-900 dark:text-zinc-50"
-                  : "text-zinc-500 hover:text-zinc-900 dark:text-zinc-500 dark:hover:text-zinc-200",
+                  ? "text-zinc-900"
+                  : "text-zinc-500 hover:text-zinc-900",
               ]}
             >
               Contact
@@ -74,10 +74,10 @@ const isWorkSubpage = /^\/works\/[^/]+$/.test(pathname);
           </div>
           {
             isWorkSubpage ? (
-              <div class="mt-4 flex w-full justify-start self-stretch border-t border-zinc-200/80 pt-4 dark:border-zinc-800">
+              <div class="mt-4 flex w-full justify-start self-stretch border-t border-zinc-200/80 pt-4">
                 <a
                   href="/"
-                  class="inline-flex items-center gap-2 text-sm text-zinc-500 transition-colors hover:text-zinc-900 dark:text-zinc-500 dark:hover:text-zinc-200"
+                  class="inline-flex items-center gap-2 text-sm text-zinc-500 transition-colors hover:text-zinc-900"
                 >
                   <span class="nav-chevron-left" aria-hidden />
                   Back to home
