@@ -60,9 +60,8 @@ export function ScrollReveal({
     <div
       ref={ref}
       className={[
-        'w-full ease-out motion-reduce:translate-y-0 motion-reduce:opacity-100',
-        'transition-opacity transition-transform duration-[400ms]',
-        visible ? 'translate-y-0 opacity-100' : 'translate-y-32 opacity-0',
+        'scroll-reveal',
+        visible ? 'scroll-reveal-visible' : 'scroll-reveal-hidden',
         className,
       ]
         .filter(Boolean)

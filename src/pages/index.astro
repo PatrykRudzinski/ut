@@ -25,7 +25,7 @@ const coverById = Object.fromEntries(
 ---
 
 <Layout>
-  <div class="home-intro w-full space-y-8 px-[2px]">
+  <div class="page-enter w-full space-y-8 px-[2px]">
     <ul
       class="grid w-full list-none grid-cols-2 gap-[2px] px-0 pt-2 pb-8 min-[780px]:grid-cols-3"
     >
@@ -51,26 +51,3 @@ const coverById = Object.fromEntries(
     </ul>
   </div>
 </Layout>
-
-<style>
-  .home-intro {
-    animation: home-intro-fade 500ms ease-out both;
-  }
-
-  @keyframes home-intro-fade {
-    from {
-      opacity: 0;
-      transform: translateY(12px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .home-intro {
-      animation: none;
-    }
-  }
-</style>

@@ -7,13 +7,34 @@ type Props = {
 
 const { title = "urszulaturewicz" } = Astro.props;
 const pathname = Astro.url.pathname;
-const isWorkSubpage = pathname.split("/").includes("works");
+// const isWorkSubpage = pathname.split("/").includes("works");
+
+const navItems = [
+  {
+    label: "Works",
+    href: "/",
+  },
+  {
+    label: "About",
+    href: "/about",
+  },
+  {
+    label: "Contact",
+    href: "/contact",
+  },
+];
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
@@ -21,12 +42,12 @@ const isWorkSubpage = pathname.split("/").includes("works");
   <body class="bg-zinc-50 text-zinc-900">
     <div class="flex min-h-dvh flex-col">
       <header class="shrink-0">
-        <div class="mx-auto max-w-[1200px] px-6 pb-4 pt-8 text-center">
+        <div class="mx-auto max-w-[1200px] pt-8 text-left">
           <a
             href="/"
-            class="text-base font-medium uppercase tracking-[0.35em] text-zinc-900 sm:text-lg"
+            class="text-4xl tracking-wide font-semibold font-decorative text-zinc-900"
           >
-            urszula turewicz
+            Urszula Turewicz
           </a>
         </div>
       </header>
@@ -34,57 +55,26 @@ const isWorkSubpage = pathname.split("/").includes("works");
         class="sticky top-0 z-10 w-full shrink-0 bg-zinc-50/80 py-4 backdrop-blur"
         aria-label="Main"
       >
-        <div class="mx-auto flex max-w-[1200px] flex-col items-center px-6">
+        <div class="mx-auto flex max-w-[1200px] flex-col items-end">
           <div
             class="flex flex-wrap items-center justify-center gap-x-8 gap-y-2"
           >
-            <a
-              href="/"
-              class:list={[
-                "text-sm transition-colors",
-                pathname === "/"
-                  ? "text-zinc-900"
-                  : "text-zinc-500 hover:text-zinc-900",
-              ]}
-            >
-              Works
-            </a>
-            <a
-              href="/about"
-              class:list={[
-                "text-sm transition-colors",
-                pathname === "/about"
-                  ? "text-zinc-900"
-                  : "text-zinc-500 hover:text-zinc-900",
-              ]}
-            >
-              About
-            </a>
-            <a
-              href="/contact"
-              class:list={[
-                "text-sm transition-colors",
-                pathname === "/contact"
-                  ? "text-zinc-900"
-                  : "text-zinc-500 hover:text-zinc-900",
-              ]}
-            >
-              Contact
-            </a>
-          </div>
-          {
-            isWorkSubpage ? (
-              <div class="mt-4 flex w-full justify-start self-stretch border-t border-zinc-200/80 pt-4">
+            {
+              navItems.map((item) => (
                 <a
-                  href="/"
-                  class="inline-flex items-center gap-2 text-sm text-zinc-500 transition-colors hover:text-zinc-900"
+                  href={item.href}
+                  class:list={[
+                    "text-lg uppercase tracking-wide transition-colors hover:underline",
+                    pathname === item.href
+                      ? "text-zinc-900"
+                      : "text-zinc-500 hover:text-zinc-900",
+                  ]}
                 >
-                  <span class="nav-chevron-left" aria-hidden />
-                  Back to home
+                  {item.label}
                 </a>
-              </div>
-            ) : null
-          }
+              ))
+            }
+          </div>
         </div>
       </nav>
       <main class="mx-auto w-full max-w-[1200px] flex-1">

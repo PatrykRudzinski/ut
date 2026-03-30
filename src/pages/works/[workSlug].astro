@@ -39,23 +39,36 @@ const gallery = Object.entries(imageImports)
 ---
 
 <Layout title={`${title} — urszulaturewicz`}>
-  <article class="space-y-8">
-    <header class="space-y-4">
-      <h1 class="text-center text-3xl font-semibold tracking-tight">
+  <article class="">
+    <header class="page-enter space-y-4">
+      <h1
+        class="font-decorative text-center text-3xl pt-8 pb-6 font-semibold tracking-tight"
+      >
         {title}
       </h1>
       <p
-        class="mx-auto max-w-3xl text-center text-base leading-relaxed text-zinc-600 sm:text-lg"
+        class={`
+        mx-auto max-w-[60ch] text-center text-base leading-relaxed tracking-wide px-2
+         text-zinc-600 [&_p]:m-0 [&_strong]:font-normal [&_strong]:text-[#2CFF05] sm:text-lg
+         `}
       >
         {description}
       </p>
     </header>
-
+    <div class="sticky inline-block top-5 z-10">
+      <a
+        href="/"
+        class="uppercase items-center gap-2 text-sm text-zinc-500 transition-colors hover:text-zinc-900"
+      >
+        <span class="nav-chevron-left mb-0.25" aria-hidden></span>
+        Back to home
+      </a>
+    </div>
     {
       gallery.length > 0 ? (
-        <div class="flex flex-col gap-6">
+        <div class="flex flex-col gap-6 pt-2 pb-8">
           {gallery.map((src, index) => (
-            <ScrollReveal client:visible>
+            <ScrollReveal client:visible className="w-full">
               <figure class="m-0 aspect-4/3 w-full overflow-hidden">
                 <Image
                   src={src}
