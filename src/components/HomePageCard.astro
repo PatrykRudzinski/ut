@@ -1,5 +1,4 @@
 ---
-import type { HomeWorkItem } from "../data/mockHomeWorks";
 import { getContrastingTextColor } from "../theme/homePageCardPalette";
 import { Image } from "astro:assets";
 
@@ -21,7 +20,7 @@ const titleColor = textColorProp ?? getContrastingTextColor(color);
 <a
   href={`/works/${workSlug}`}
   aria-label={`View work: ${title}`}
-  class="group relative block aspect-square overflow-hidden shadow-sm outline-none ring-violet-500/30 transition-shadow hover:shadow-md focus-visible:ring-2"
+  class="group relative block aspect-square overflow-hidden outline-none ring-violet-500/30 focus-visible:ring-2"
   style={{ backgroundColor: color }}
 >
   {
@@ -41,7 +40,7 @@ const titleColor = textColorProp ?? getContrastingTextColor(color);
     style={{ backgroundColor: color }}
   >
     <span
-      class="text-center text-2xl font-semibold tracking-tight sm:text-4xl"
+      class="font-decorative leading-relaxed tracking-wide text-center text-lg sm:text-2xl max-w-[280px] px-2 mx-auto"
       style={{ color: titleColor }}
     >
       {title}
