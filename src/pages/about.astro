@@ -1,15 +1,23 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { getEntry, render } from "astro:content";
+
+const aboutEntry = await getEntry("about", "about");
+if (!aboutEntry) {
+  throw new Error("Missing src/content/about.md");
+}
+const { Content } = await render(aboutEntry);
 ---
 
 <Layout>
-  <div class="space-y-4">
-    <h1 class="text-3xl font-semibold tracking-tight">About</h1>
-    <p class="text-zinc-600 dark:text-zinc-400">
-      About page at <code
-        class="rounded bg-zinc-100 px-1.5 py-0.5 font-mono text-sm dark:bg-zinc-800"
-        >/about</code
-      >.
-    </p>
+  <div
+    class={`
+      text-center leading-relaxed text-zinc-600
+      max-w-[60ch] mx-auto px-2 pt-12 pb-8
+      text-xl lg:text-3xl 
+      lg:pt-24 [&_p]:m-0 [&_strong]:font-normal [&_strong]:text-[#2CFF05]
+    `}
+  >
+    <Content />
   </div>
 </Layout>

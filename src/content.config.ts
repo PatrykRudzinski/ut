@@ -12,4 +12,11 @@ export const collections = {
       description: z.string().optional(),
     }),
   }),
+  about: defineCollection({
+    loader: glob({
+      pattern: "about.md",
+      base: "./src/content",
+    }),
+    schema: z.object({}),
+  }),
 };
