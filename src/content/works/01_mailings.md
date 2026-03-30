@@ -1,4 +1,4 @@
 ---
-title: "Mój projekt"
-description: "Krótki opis projektu"
+title: "Mailingi"
+description: "Lorem ipsum"
 ---
