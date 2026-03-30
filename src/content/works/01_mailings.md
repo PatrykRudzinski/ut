@@ -1,4 +1,4 @@
 ---
 title: "Mailingi"
-description: "Lorem ipsum"
+description: "Lorem ipsum 23"
 ---
