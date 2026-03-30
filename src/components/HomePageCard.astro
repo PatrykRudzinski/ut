@@ -1,15 +1,20 @@
 ---
 import type { HomeWorkItem } from "../data/mockHomeWorks";
 import { getContrastingTextColor } from "../theme/homePageCardPalette";
+import { Image } from "astro:assets";
 
 type Props = {
-  work: HomeWorkItem;
+  work: {
+    workSlug: string;
+    title: string;
+    imageSource: ImageMetadata;
+  };
   color: string;
   textColor?: string;
 };
 
 const { work, color, textColor: textColorProp } = Astro.props;
-const { workSlug, title, imageUrl } = work;
+const { workSlug, title, imageSource } = work;
 const titleColor = textColorProp ?? getContrastingTextColor(color);
 ---
 
@@ -19,10 +24,13 @@ const titleColor = textColorProp ?? getContrastingTextColor(color);
   class="group relative block aspect-square overflow-hidden shadow-sm outline-none ring-violet-500/30 transition-shadow hover:shadow-md focus-visible:ring-2"
   style={{ backgroundColor: color }}
 >
-  <div
-    class="absolute inset-0 bg-cover bg-center transition-opacity duration-300 ease-out group-hover:opacity-0 group-focus-within:opacity-0"
-    style={{ backgroundImage: `url(${imageUrl})` }}
-    role="presentation"
+  <Image
+    src={imageSource}
+    alt={title}
+    width={400}
+    height={400}
+    loading="lazy"
+    class="absolute inset-0 h-full w-full object-cover transition-opacity duration-300 ease-out group-hover:opacity-0 group-focus-within:opacity-0"
   />
   <div
     class="absolute inset-0 flex items-center justify-center p-4 opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-100 group-focus-within:opacity-100"

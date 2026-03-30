@@ -1,44 +1,52 @@
 ---
 import HomePageCard from "../components/HomePageCard.astro";
 import Layout from "../layouts/Layout.astro";
-import { MOCK_HOME_WORKS } from "../data/mockHomeWorks";
+import { getCollection } from "astro:content";
 import { HOME_PAGE_CARD_PALETTE } from "../theme/homePageCardPalette";
+import type { ImageMetadata } from "astro";
 
-import imgUrl from "../assets/data/source/mailing/images/cover.jpg";
+const works = await getCollection("works");
+
+// Eagerly import all cover images under /src/assets/works/*/cover.*
+const coverImports = import.meta.glob<{
+  default: ImageMetadata;
+}>("../assets/works/*/cover.{jpg,jpeg,png,webp}", { eager: true });
+
+// Map content entry id (e.g. "01_mailings") -> cover URL
+const coverById = Object.fromEntries(
+  Object.entries(coverImports)
+    .map(([path, mod]) => {
+      const match = path.match(/\/works\/([^/]+)\//);
+      const id = match?.[1];
+      return id ? [id, mod.default] : null;
+    })
+    .filter(Boolean) as [string, ImageMetadata][],
+);
 ---
 
 <Layout>
   <div class="w-full space-y-8 px-[2px]">
-    <ul class="grid w-full list-none grid-cols-2 gap-[2px] p-0 min-[780px]:grid-cols-3">
+    <ul
+      class="grid w-full list-none grid-cols-2 gap-[2px] p-0 min-[780px]:grid-cols-3"
+    >
       {
-        [MOCK_HOME_WORKS[0], MOCK_HOME_WORKS[1]].map((work, index) => (
-          <li>
-            <HomePageCard
-              work={work}
-              color={HOME_PAGE_CARD_PALETTE[index % HOME_PAGE_CARD_PALETTE.length]}
-            />
-          </li>
-        ))
-      }
-      <li>
-        <HomePageCard
-          work={{
-            workSlug: "mailing",
-            title: "Mailing",
-            imageUrl: imgUrl.src,
-          }}
-          color={HOME_PAGE_CARD_PALETTE[2 % HOME_PAGE_CARD_PALETTE.length]}
-        />
-      </li>
-      {
-        [MOCK_HOME_WORKS[3], MOCK_HOME_WORKS[4]].map((work, index) => (
-          <li>
-            <HomePageCard
-              work={work}
-              color={HOME_PAGE_CARD_PALETTE[index % HOME_PAGE_CARD_PALETTE.length]}
-            />
-          </li>
-        ))
+        works.map((entry, index) => {
+          const coverSource = coverById[entry.id];
+          return (
+            <li>
+              <HomePageCard
+                work={{
+                  workSlug: entry.id,
+                  title: entry.data.title,
+                  imageSource: coverSource,
+                }}
+                color={
+                  HOME_PAGE_CARD_PALETTE[index % HOME_PAGE_CARD_PALETTE.length]
+                }
+              />
+            </li>
+          );
+        })
       }
     </ul>
   </div>
