@@ -1,4 +1,4 @@
 ---
 title: "Mailingi"
-description: "Lorem ipsum 123"
+description: "Przygotowanie projektów mailingów dla Klubu PZU Pomocni. Mailingi miały charakter informacyjny i zapoznawały klientów z dostępnymi benefitami."
 ---
